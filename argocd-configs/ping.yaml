@@ -11,7 +11,7 @@ spec:
   source:
     path: ping/base
     repoURL: https://github.com/kesompochy/helmfile-argocd-test
-    targetRevision: master
+    targetRevision: main
   syncPolicy:
     automated:
       selfHeal: true
