@@ -25,5 +25,5 @@ releases:
   namespace: consul
   chart: hashicorp/consul
   version: 0.40.0
- # values:
- # - values.yaml.gotmpl
+  values:
+  - values.yaml.gotmpl
