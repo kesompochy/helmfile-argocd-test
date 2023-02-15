@@ -12,6 +12,8 @@ spec:
     path: consul
     repoURL: https://github.com/kesompochy/helmfile-argocd-test
     targetRevision: main
+    plugin: {}
+
   syncPolicy:
     automated:
       selfHeal: true
