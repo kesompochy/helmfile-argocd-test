@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ping
+  name: ping
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: ping
+  template:
+    metadata:
+      labels:
+        app: ping
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: web
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nginx-html
+        readinessProbe:
+          httpGet:
+            port: 80
+            path: /
+        livenessProbe:
+          httpGet:
+            port: 80
+            path: /
+      volumes:
+      - name: nginx-html
+        configMap:
+          name: ping-nginx-html
+          items:
+          - key: 200.html
+            path: index.html

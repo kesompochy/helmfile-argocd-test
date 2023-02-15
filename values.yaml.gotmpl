@@ -1,0 +1,12 @@
+server:
+  extraArgs:
+    - --insecure
+  config:
+    url: https://{{ .Values }}
+  ingress:
+    enabled: true
+    annotations: {
+      cert-manager.io/cluster-issuer: "letsencrypt-nke-pepalab"
+    }
+    ingressClassName: "ingress-nginx"
+

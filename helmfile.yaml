@@ -1,0 +1,24 @@
+repositories:
+- name: argo
+  url: https://argoproj.github.io/argo-helm
+
+environments:
+  default:
+  staging:
+    values:
+    - environment/staging.yaml
+  production-blue:
+    values:
+    - environment/production-blue.yaml
+  production-green:
+    values:
+    - environment/production-green.yaml
+
+releases:
+- name: argocdhelm
+  namespace: argocd
+  chart: argo/argo-cd
+  version: 3.12.1
+  values:
+  - values.yaml.gotmpl
+#  - values-rbac.yaml
