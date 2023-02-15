@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: ping/base
+    path: ping
     repoURL: https://github.com/kesompochy/helmfile-argocd-test
     targetRevision: main
   syncPolicy:
