@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: prometheus
+    repoURL: https://github.com/kesompochy/helmfile-argocd-test
+    targetRevision: main
+    plugin: 
+      name: helmfile
+
+  syncPolicy:
+    automated:
+      selfHeal: true
