@@ -1,0 +1,29 @@
+repositories:
+- name: hashicorp
+  url: https://helm.releases.hashicorp.com
+
+#environments:
+#  default:
+#  staging:
+#    values:
+#    - environment/staging.yaml
+#  blue-production:
+#    values:
+#    - environment/blue-production.yaml
+#  green-production:
+#    values:
+#    - environment/green-production.yaml
+#  shop01-staging:
+#    values:
+#    - environment/shop01-staging.yaml
+#  shop01-production:
+#    values:
+#    - environment/shop01-production.yaml
+
+releases:
+- name: consul
+  namespace: consul
+  chart: hashicorp/consul
+  version: 0.40.0
+ # values:
+ # - values.yaml.gotmpl
