@@ -3,6 +3,14 @@ server:
     - --insecure
   config:
     url: https://{{ .Values }}
+    configManagementPlugins: |
+      - name: helmfile
+        init:                          # Optional command to initialize application source directory
+          command: ["argo-cd-helmfile.sh"]
+          args: ["init"]
+        generate:                      # Command to generate manifests YAML
+          command: ["argo-cd-helmfile.sh"]
+          args: ["generate"]
   ingress:
     enabled: true
     annotations: {
@@ -10,3 +18,32 @@ server:
     }
     ingressClassName: "ingress-nginx"
 
+repoServer:
+  initContainers:
+    - args:
+      - wget -qO /custom-tools/argo-cd-helmfile.sh https://raw.githubusercontent.com/travisghansen/argo-cd-helmfile/master/src/argo-cd-helmfile.sh
+        && chmod +x /custom-tools/argo-cd-helmfile.sh && wget -qO /custom-tools/helmfile
+        https://github.com/roboll/helmfile/releases/download/v0.138.7/helmfile_linux_amd64
+        && chmod +x /custom-tools/helmfile
+      command:
+      - sh
+      - -c
+      image: alpine:3.8
+      imagePullPolicy: IfNotPresent
+      name: download-tools
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /custom-tools
+        name: custom-tools
+  volumeMounts:
+    - mountPath: /usr/local/bin/argo-cd-helmfile.sh
+      name: custom-tools
+      subPath: argo-cd-helmfile.sh
+    - mountPath: /usr/local/bin/helmfile
+      name: custom-tools
+      subPath: helmfile
+  volumes:
+    - emptyDir: {}
+      name: custom-tools
